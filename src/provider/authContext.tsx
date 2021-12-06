@@ -5,12 +5,6 @@ import {
   CognitoUser,
 } from "amazon-cognito-identity-js";
 
-//
-// const poolData = {
-//   UserPoolId: "us-east-1_KS2lF8b8a", // Your user pool id here
-//   ClientId: "7na44b7gd5q0q5fg65k37bm6hc", // Your client id here
-// };
-
 const poolData = {
   UserPoolId: 'us-west-1_Y80GF2l76',
   ClientId: '8joaoqopt725b1t0773g5ff6n'
@@ -37,10 +31,10 @@ export const AuthContext = createContext<authProps>({
   user: {},
   token: "",
   setUser: null,
-  signIn: () => {},
-  signUp: () => {},
-  verifyUser: () => {},
-  logout: () => {},
+  signIn: () => { },
+  signUp: () => { },
+  verifyUser: () => { },
+  logout: () => { },
 });
 
 export const AuthProvider = ({ children }: any) => {
@@ -85,9 +79,9 @@ export const AuthProvider = ({ children }: any) => {
       onSuccess: (result) => {
         const tk = result.getIdToken().getJwtToken();
         setToken(tk);
-        console.log(tk);
-        
-        return tk;
+        console.log(tk)
+        setUser(userPool.getCurrentUser())
+        // return tk;
       },
 
       onFailure: (err) => {

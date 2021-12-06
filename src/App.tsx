@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./provider/authContext";
-import { HomeScreen, SignIn, SignUp } from "./screens";
+import { HomeScreen, SignIn, SignUp, Table } from "./screens";
 
 export default function App() {
   return (
@@ -9,6 +9,7 @@ export default function App() {
         <Route path="/" element={<HomeScreen />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/table" element={<Table />} />
       </Routes>
     </AuthProvider>
   );

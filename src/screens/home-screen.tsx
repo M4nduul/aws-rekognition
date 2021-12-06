@@ -6,10 +6,13 @@ import { ReactComponent as SearcgIcon } from "../assets/searchIcon.svg";
 import { Loader } from "../components/loader";
 import { AuthContext } from "../provider/authContext";
 
-export const HomeScreen = () => {
-  const { user } = useContext(AuthContext);
-  const navigation = useNavigate();
+const AWS = require("aws-sdk");
+const s3 = new AWS.S3();
 
+export const HomeScreen = () => {
+  const { user, token } = useContext(AuthContext);
+  const navigation = useNavigate();
+  console.log(token)
   const onPress = () => {
     navigation("/signIn");
   };
@@ -28,9 +31,21 @@ export const HomeScreen = () => {
   );
 };
 
+
 const Content = () => {
   const [selectedFile, setSelectedFile] = useState(undefined);
   const [searching, setSearching] = useState(false);
+
+  const upload = async () => {
+    const params = {
+      Bucket: 'date1201',
+      Key: `uploads/image.jpeg`,
+      ContentType: 'image/jpeg'
+    }
+
+    const url = await s3.getSignedUrl('putObject', params);
+
+  }
 
   return (
     <div className="w-60-vw flex justify-between align-center">
@@ -40,7 +55,7 @@ const Content = () => {
           label="Click to upload"
         />
         {selectedFile && (
-          <Button className="absolute pv-20 ph-20 mt-10 bottom-1">
+          <Button className="absolute pv-20 ph-20 mt-10 bottom-1" onClick={upload}>
             <Text fontSize="16">Upload to AWS</Text>
           </Button>
         )}
