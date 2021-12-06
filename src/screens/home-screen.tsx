@@ -6,8 +6,6 @@ import { ReactComponent as SearcgIcon } from "../assets/searchIcon.svg";
 import { Loader } from "../components/loader";
 import { AuthContext } from "../provider/authContext";
 
-const AWS = require("aws-sdk");
-const s3 = new AWS.S3();
 
 export const HomeScreen = () => {
   const { user, token } = useContext(AuthContext);
@@ -33,33 +31,15 @@ export const HomeScreen = () => {
 
 
 const Content = () => {
-  const [selectedFile, setSelectedFile] = useState(undefined);
+  const [selectedFile, setSelectedFile] = useState<any>(undefined);
   const [searching, setSearching] = useState(false);
-
-  const upload = async () => {
-    const params = {
-      Bucket: 'date1201',
-      Key: `uploads/image.jpeg`,
-      ContentType: 'image/jpeg'
-    }
-
-    const url = await s3.getSignedUrl('putObject', params);
-
-  }
 
   return (
     <div className="w-60-vw flex justify-between align-center">
-      <div className="relative flex-col align-center">
-        <FileInput
-          onFileSelect={(file: any) => setSelectedFile(file)}
-          label="Click to upload"
-        />
-        {selectedFile && (
-          <Button className="absolute pv-20 ph-20 mt-10 bottom-1" onClick={upload}>
-            <Text fontSize="16">Upload to AWS</Text>
-          </Button>
-        )}
-      </div>
+      <FileInput
+        onFileSelect={(file: any) => setSelectedFile(file)}
+        label="Click to upload"
+      />
 
       {searching ? (
         <Loader />
