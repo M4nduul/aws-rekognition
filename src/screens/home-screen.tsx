@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as SearcgIcon } from "../assets/searchIcon.svg";
 import { Loader } from "../components/loader";
 import { AuthContext } from "../provider/authContext";
+import { uploadImg, frontImg } from "../api";
 
 
 export const HomeScreen = () => {
@@ -14,6 +15,8 @@ export const HomeScreen = () => {
   const onPress = () => {
     navigation("/signIn");
   };
+
+
   return user ? (
     <ScreenContainer justifyContent="justify-between" className="flex-col">
       <Header />
@@ -33,6 +36,15 @@ export const HomeScreen = () => {
 const Content = () => {
   const [selectedFile, setSelectedFile] = useState<any>(undefined);
   const [searching, setSearching] = useState(false);
+  const [img, setImg] = useState<any>('');
+
+
+  const sendImg = async () => {
+    const imgData = await frontImg(selectedFile)
+    setImg(imgData)
+    console.log(imgData);
+
+  }
 
   return (
     <div className="w-60-vw flex justify-between align-center">
@@ -40,7 +52,9 @@ const Content = () => {
         onFileSelect={(file: any) => setSelectedFile(file)}
         label="Click to upload"
       />
-
+      <Button className="pv-14 ph-30" onClick={sendImg}>
+        <Text fontSize="24">Send image</Text>
+      </Button>
       {searching ? (
         <Loader />
       ) : (
@@ -51,6 +65,7 @@ const Content = () => {
       )}
 
       <div className="image w-20-vw h-20-vw" />
+      <img src={img} />
     </div>
   );
 };

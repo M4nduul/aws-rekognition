@@ -59,7 +59,7 @@ const GetEmailAndPassword = ({ setCheckCode }: { setCheckCode: any }) => {
           <Button
             className="pv-14 ph-30"
             type="text"
-            onClick={() => navigation('/')}
+            onClick={() => navigation('/signin')}
           // onClick={uploadImg}
           >
             <Text fontSize="24" color="primary">
